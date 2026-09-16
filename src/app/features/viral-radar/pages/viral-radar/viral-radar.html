@@ -1,5 +1,4 @@
 <section class="viral-radar">
-
   <header class="viral-radar__header">
     <div class="viral-radar__icon">
       <svg
@@ -19,7 +18,6 @@
   </header>
 
   <section class="search-card">
-
     <div
       class="search-card__tabs"
       role="tablist"
@@ -38,7 +36,7 @@
           aria-hidden="true"
         ></svg>
 
-        Link
+        <span>Link</span>
       </button>
 
       <button
@@ -54,12 +52,11 @@
           aria-hidden="true"
         ></svg>
 
-        Perfil do Instagram
+        <span>Perfil do Instagram</span>
       </button>
     </div>
 
     <div class="search-card__content">
-
       <div class="search-card__description">
         @if (activeTab() === 'link') {
           <h2>Analise um conteúdo</h2>
@@ -77,33 +74,55 @@
       </div>
 
       <div class="search-card__form">
+        <div class="search-card__field">
+          <div class="search-card__input-wrapper">
+            <svg
+              lucideSearch
+              class="search-card__input-icon"
+              aria-hidden="true"
+            ></svg>
 
-        <div class="search-card__input-wrapper">
+            <input
+              type="text"
+              class="search-card__input"
+              [class.search-card__input--error]="
+                hasSubmitted() && validationError()
+              "
+              [value]="searchValue()"
+              [placeholder]="
+                activeTab() === 'link'
+                  ? 'https://instagram.com/reel/...'
+                  : '@perfil'
+              "
+              [attr.aria-invalid]="
+                hasSubmitted() && validationError()
+                  ? 'true'
+                  : 'false'
+              "
+              [attr.aria-describedby]="
+                hasSubmitted() && validationError()
+                  ? 'search-error'
+                  : null
+              "
+              (input)="updateSearchValue($event)"
+            />
+          </div>
 
-          <svg
-            lucideSearch
-            class="search-card__input-icon"
-            aria-hidden="true"
-          ></svg>
-
-          <input
-            type="text"
-            class="search-card__input"
-            [value]="searchValue()"
-            [placeholder]="
-              activeTab() === 'link'
-                ? 'https://instagram.com/reel/...'
-                : '@perfil'
-            "
-            (input)="updateSearchValue($event)"
-          />
-
+          @if (hasSubmitted() && validationError()) {
+            <p
+              id="search-error"
+              class="search-card__error"
+              role="alert"
+            >
+              {{ validationError() }}
+            </p>
+          }
         </div>
 
         <button
           type="button"
           class="search-card__button"
-          [disabled]="!searchValue().trim() || isLoading()"
+          [disabled]="isLoading()"
           (click)="analyze()"
         >
           @if (isLoading()) {
@@ -112,17 +131,17 @@
             Analisar
           }
         </button>
-
       </div>
 
       @if (result()) {
-        <div class="search-card__result">
+        <div
+          class="search-card__result"
+          role="status"
+          aria-live="polite"
+        >
           {{ result() }}
         </div>
       }
-
     </div>
-
   </section>
-
 </section>
