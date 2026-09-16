@@ -194,12 +194,16 @@
       color: var(--color-text-muted);
     }
 
-    &:focus {
-      border-color: var(--color-primary);
+    &--error {
+      border-color: #b94a48;
 
-      box-shadow:
-        0 0 0 3px var(--color-primary-soft);
+      &:focus {
+        border-color: #b94a48;
+        box-shadow: 0 0 0 3px rgb(185 74 72 / 14%); 
+      }
     }
+
+   
   }
 
   &__button {
@@ -249,4 +253,20 @@
     border: 1px solid var(--color-primary);
     border-radius: var(--radius-md);
   }
+
+  &__field {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+&__error {
+  margin: 8px 0 0;
+
+  color: #d97a76;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
 }
