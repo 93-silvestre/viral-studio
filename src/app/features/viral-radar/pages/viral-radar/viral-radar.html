@@ -1,0 +1,128 @@
+<section class="viral-radar">
+
+  <header class="viral-radar__header">
+    <div class="viral-radar__icon">
+      <svg
+        lucideRadar
+        aria-hidden="true"
+      ></svg>
+    </div>
+
+    <div>
+      <h1>Radar Viral</h1>
+
+      <p>
+        Encontre conteúdos que estão performando e descubra
+        padrões para criar novas ideias.
+      </p>
+    </div>
+  </header>
+
+  <section class="search-card">
+
+    <div
+      class="search-card__tabs"
+      role="tablist"
+      aria-label="Tipo de pesquisa"
+    >
+      <button
+        type="button"
+        role="tab"
+        class="search-card__tab"
+        [class.search-card__tab--active]="activeTab() === 'link'"
+        [attr.aria-selected]="activeTab() === 'link'"
+        (click)="selectTab('link')"
+      >
+        <svg
+          lucideLink
+          aria-hidden="true"
+        ></svg>
+
+        Link
+      </button>
+
+      <button
+        type="button"
+        role="tab"
+        class="search-card__tab"
+        [class.search-card__tab--active]="activeTab() === 'profile'"
+        [attr.aria-selected]="activeTab() === 'profile'"
+        (click)="selectTab('profile')"
+      >
+        <svg
+          lucideUserRound
+          aria-hidden="true"
+        ></svg>
+
+        Perfil do Instagram
+      </button>
+    </div>
+
+    <div class="search-card__content">
+
+      <div class="search-card__description">
+        @if (activeTab() === 'link') {
+          <h2>Analise um conteúdo</h2>
+
+          <p>
+            Cole o link de um Reel ou publicação do Instagram.
+          </p>
+        } @else {
+          <h2>Pesquise um perfil</h2>
+
+          <p>
+            Informe o usuário de um perfil para encontrar conteúdos.
+          </p>
+        }
+      </div>
+
+      <div class="search-card__form">
+
+        <div class="search-card__input-wrapper">
+
+          <svg
+            lucideSearch
+            class="search-card__input-icon"
+            aria-hidden="true"
+          ></svg>
+
+          <input
+            type="text"
+            class="search-card__input"
+            [value]="searchValue()"
+            [placeholder]="
+              activeTab() === 'link'
+                ? 'https://instagram.com/reel/...'
+                : '@perfil'
+            "
+            (input)="updateSearchValue($event)"
+          />
+
+        </div>
+
+        <button
+          type="button"
+          class="search-card__button"
+          [disabled]="!searchValue().trim() || isLoading()"
+          (click)="analyze()"
+        >
+          @if (isLoading()) {
+            Analisando...
+          } @else {
+            Analisar
+          }
+        </button>
+
+      </div>
+
+      @if (result()) {
+        <div class="search-card__result">
+          {{ result() }}
+        </div>
+      }
+
+    </div>
+
+  </section>
+
+</section>
